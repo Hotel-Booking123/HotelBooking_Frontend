@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class RoomService {
   private apiUrl = `${environment.apiUrl}/hotels`;
-
   constructor(private http: HttpClient) {}
 
   getByHotel(hotelId: number, checkIn?: string, checkOut?: string): Observable<Room[]> {
