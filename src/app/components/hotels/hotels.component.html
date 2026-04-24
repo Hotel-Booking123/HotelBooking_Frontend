@@ -1,1 +1,51 @@
-<p>hotels works!</p>
+<div class="container mt-4">
+  <!-- Search Panel -->
+  <div class="search-panel">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="search-form">
+      <div class="search-group">
+        <label>Location</label>
+        <input type="text" formControlName="location" placeholder="City, region...">
+      </div>
+      <div class="search-group">
+        <label>Check-in</label>
+        <input type="date" formControlName="checkIn">
+      </div>
+      <div class="search-group">
+        <label>Check-out</label>
+        <input type="date" formControlName="checkOut">
+      </div>
+      <div class="search-group">
+        <label>Min price</label>
+        <input type="number" formControlName="minPrice" placeholder="$">
+      </div>
+      <div class="search-group">
+        <label>Max price</label>
+        <input type="number" formControlName="maxPrice" placeholder="$">
+      </div>
+      <div class="search-group">
+        <button type="submit" class="btn-gold-outline">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Hotel Grid -->
+  <div class="hotel-grid" *ngIf="hotels.length > 0; else noHotels">
+    <div class="hotel-card" *ngFor="let hotel of hotels">
+      <div class="hotel-card-body">
+        <div class="hotel-name">{{ hotel.name }}</div>
+        <div class="hotel-location">📍 {{ hotel.location }}</div>
+        <div class="hotel-description">{{ hotel.description | slice:0:120 }}...</div>
+        <div class="hotel-amenities">✨ {{ hotel.amenities }}</div>
+        <a [routerLink]="['/hotels', hotel.id]" class="btn-view">View Rooms →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <ng-template #noHotels>
+    <div class="text-center empty-state">
+      <p>No hotels found. Try adjusting your filters.</p>
+    </div>
+  </ng-template>
+</div>
+
