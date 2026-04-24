@@ -1,1 +1,53 @@
-<p>hotel-detail works!</p>
+<div class="container mt-4">
+  <!-- Availability Bar -->
+  <div class="availability-bar" [formGroup]="availForm">
+    <div class="date-group">
+      <label>Check-in</label>
+      <input type="date" formControlName="checkIn" class="date-input" (change)="onDateChange()">
+    </div>
+    <div class="date-group">
+      <label>Check-out</label>
+      <input type="date" formControlName="checkOut" class="date-input" (change)="onDateChange()">
+    </div>
+    <button type="button" class="btn-check" (click)="checkAvailability()" [disabled]="availForm.invalid">
+      Check Availability
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Checking room availability...</p>
+  </div>
+
+  <!-- Room Grid -->
+  <div *ngIf="!loading" class="room-grid">
+    <div class="room-card" *ngFor="let room of rooms"
+         [class.available]="true"
+         [class.unavailable]="false">
+      <div class="room-number">Room {{ room.roomNumber }}</div>
+      <div class="room-type">{{ room.type }}</div>
+      <div class="room-price">${{ room.pricePerNight }} / night</div>
+      <div class="room-occupancy">👥 Max {{ room.maxOccupancy }}</div>
+      
+      <!-- Availability Status (when dates are selected) -->
+      <div *ngIf="availForm.value.checkIn && availForm.value.checkOut && availForm.valid" class="availability-status">
+        <span class="text-success">✓ Available for selected dates</span>
+      </div>
+      
+      <!-- Book Now Button -->
+      <button *ngIf="availForm.value.checkIn && availForm.value.checkOut && availForm.valid"
+              class="btn-book"
+              (click)="bookRoom(room)">
+        Book Now →
+      </button>
+      <span *ngIf="!availForm.value.checkIn || !availForm.value.checkOut" 
+            class="btn-book-disabled">Select dates to book</span>
+    </div>
+    
+    <!-- No rooms message -->
+    <div *ngIf="rooms.length === 0" class="no-rooms">
+      <p>No rooms available for selected dates. Please try different dates.</p>
+    </div>
+  </div>
+</div>

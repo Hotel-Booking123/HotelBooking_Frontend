@@ -1,1 +1,74 @@
-<p>booking-history works!</p>
+<div class="container mt-4">
+  <div class="history-header">
+    <h2>My Bookings</h2>
+  </div>
+
+  <!-- Debug Panel - Shows what's happening -->
+  
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+    <button *ngIf="errorMessage.includes('login')" (click)="auth.logout()">Login Again</button>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading your bookings...</p>
+  </div>
+
+  <!-- Bookings table -->
+  <div *ngIf="!loading && !errorMessage && bookings.length > 0" class="history-table-container">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Hotel</th>
+          <th>Room</th>
+          <th>Check‑in</th>
+          <th>Check‑out</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td class="ref-cell">{{ getBookingReference(booking) }}</td>
+          <td class="hotel-cell">{{ getHotelName(booking) }}</td>
+          <td class="room-cell">{{ getRoomInfo(booking) }}</td>
+          <td>{{ booking.checkInDate | date:'mediumDate' }}</td>
+          <td>{{ booking.checkOutDate | date:'mediumDate' }}</td>
+          <td class="price-cell">${{ booking.totalPrice }}</td>
+          <td>
+            <span class="status-badge" 
+                  [class.status-confirmed]="booking.status === 'Confirmed'"
+                  [class.status-cancelled]="booking.status === 'Cancelled'">
+              {{ booking.status }}
+            </span>
+          </td>
+          <td class="actions-cell">
+            <button *ngIf="canRebook(booking)" 
+                    class="btn-rebook" 
+                    (click)="rebook(booking.id)">
+              Rebook
+            </button>
+            <button *ngIf="canCancel(booking)" 
+                    class="btn-cancel" 
+                    (click)="cancel(booking.id)">
+              Cancel
+            </button>
+            <span *ngIf="!canRebook(booking) && !canCancel(booking)" class="no-action">—</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Bookings Message -->
+  <div *ngIf="!loading && !errorMessage && bookings.length === 0" class="no-bookings">
+    <p>📅 No bookings found. Start your first booking now!</p>
+    <button class="btn-book-now" routerLink="/hotels">Browse Hotels</button>
+  </div>
+</div>

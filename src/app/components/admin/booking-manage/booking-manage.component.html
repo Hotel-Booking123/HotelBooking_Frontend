@@ -1,1 +1,58 @@
-<p>booking-manage works!</p>
+<div class="container mt-4">
+  <h2>Manage Bookings</h2>
+
+  <!-- Filter by Status Only -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Filter by Status</label>
+      <select [(ngModel)]="statusFilter" (ngModelChange)="applyFilters()">
+        <option value="">All</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Bookings Table -->
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer Name</th>
+          <th>Hotel</th>
+          <th>Room</th>
+          <th>Check‑in</th>
+          <th>Check‑out</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Booking Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of filteredBookings">
+          <td>{{ b.id }}</td>
+          <td class="customer-cell">
+            {{ b.userName || b.user?.fullName || b.user?.fullName}}
+            <span class="customer-email" *ngIf="b.userEmail || b.user?.email">({{ b.userEmail || b.user?.email }})</span>
+          </td>
+          <td>{{ b.hotelName || 'Unknown Hotel' }}</td>
+          <td>{{ b.roomNumber || '?' }} ({{ b.roomType || '?' }})</td>
+          <td>{{ b.checkInDate | date }}</td>
+          <td>{{ b.checkOutDate | date }}<td class="price-cell">${{ b.totalPrice }}</td>
+          <td>
+            <span class="status-badge" 
+                  [class.status-confirmed]="b.status === 'Confirmed'"
+                  [class.status-cancelled]="b.status === 'Cancelled'">
+              {{ b.status }}
+            </span>
+          </td>
+          <td>{{ b.bookingDate | date }}</td>
+        </tr>
+        <tr *ngIf="filteredBookings.length === 0">
+          <td colspan="9" class="text-center text-muted">No bookings found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
