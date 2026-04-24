@@ -1,1 +1,82 @@
-<p>room-manage works!</p>
+<div class="container mt-4">
+  <div class="manage-header">
+    <h2>Manage Rooms</h2>
+    <!-- Add Room button enabled only when hotel selected -->
+    <button class="btn-add" (click)="openForm()" [disabled]="!selectedHotelId">
+      + Add Room
+    </button>
+  </div>
+
+  <!-- Hotel selection dropdown -->
+  <div class="form-card" style="margin-bottom: 1.5rem;">
+    <div class="form-group">
+      <label>Select Hotel</label>
+      <select class="form-control" (change)="loadRooms($any($event.target).value)">
+        <option value="">-- Choose a hotel --</option>
+        <option *ngFor="let hotel of hotels" [value]="hotel.id">{{ hotel.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Add/Edit Form Card (only visible if hotel selected and showForm true) -->
+  <div class="form-card" *ngIf="showForm && selectedHotelId">
+    <form [formGroup]="roomForm" (ngSubmit)="save()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Room Number</label>
+          <input formControlName="roomNumber" placeholder="e.g., 101">
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <input formControlName="type" placeholder="Deluxe / Suite / Standard">
+        </div>
+        <div class="form-group">
+          <label>Price per night ($)</label>
+          <input type="number" formControlName="pricePerNight" placeholder="e.g., 150">
+        </div>
+        <div class="form-group">
+          <label>Max Occupancy</label>
+          <input type="number" formControlName="maxOccupancy" placeholder="e.g., 2">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-save">Save</button>
+        <button type="button" class="btn-cancel" (click)="resetForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Rooms Table (only shown when hotel selected) -->
+  <div class="table-container" *ngIf="selectedHotelId">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Room No</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Occupancy</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of rooms">
+          <td>{{ room.id }}</td>
+          <td>{{ room.roomNumber }}</td>
+          <td>{{ room.type }}</td>
+          <td>${{ room.pricePerNight }}</td>
+          <td>{{ room.maxOccupancy }}</td>
+          <td>
+            <button class="btn-edit" (click)="edit(room)">Edit</button>
+            <button class="btn-delete" (click)="delete(room.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Message if no hotel selected -->
+  <div class="info-message" *ngIf="!selectedHotelId && hotels.length > 0">
+    <p>👈 Please select a hotel to manage its rooms.</p>
+  </div>
+</div>
