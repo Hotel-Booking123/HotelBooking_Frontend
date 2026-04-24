@@ -1,1 +1,44 @@
-<p>booking-form works!</p>
+<div class="booking-container">
+  <div class="booking-card">
+    <h2>Confirm Your Booking</h2>
+
+    <!-- Room details -->
+    <div *ngIf="room" class="room-details">
+      <div class="detail-item">
+        <span class="detail-label">Room:</span>
+        <span class="detail-value">{{ room.roomNumber }} ({{ room.type }})</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Price per night:</span>
+        <span class="detail-value">${{ room.pricePerNight }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Max occupancy:</span>
+        <span class="detail-value">{{ room.maxOccupancy }} persons</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Dates:</span>
+        <span class="detail-value">{{ checkIn | date }} → {{ checkOut | date }} ({{ nights }} nights)</span>
+      </div>
+      <div class="detail-item total">
+        <span class="detail-label">Total price:</span>
+        <span class="detail-value gold">${{ totalPrice }}</span>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <!-- Booking form -->
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" *ngIf="room && !errorMessage">
+      <div class="discount-input">
+        <input type="text" formControlName="discountCode" placeholder="Discount code (optional)">
+      </div>
+      
+      <button type="submit" class="btn-confirm" [disabled]="submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+        {{ submitting ? 'Processing...' : 'Confirm Booking' }}
+      </button>
+    </form>
+  </div>
+</div>

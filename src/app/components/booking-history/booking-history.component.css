@@ -1,0 +1,343 @@
+/* Booking History Component Styles */
+
+/* Header Styles */
+.history-header {
+  margin-bottom: 28px;
+}
+
+.history-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--dark-border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Table Container */
+.history-table-container {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 24px;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.history-table th {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.history-table td {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+/* Column Specific Styling */
+.ref-cell {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.hotel-cell {
+  font-weight: 500;
+}
+
+.price-cell {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.room-cell {
+  color: var(--text-muted);
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-confirmed {
+  background: rgba(40, 167, 69, 0.15);
+  color: #2ea44f;
+  border: 1px solid rgba(46, 164, 79, 0.3);
+}
+
+.status-cancelled {
+  background: rgba(220, 53, 69, 0.12);
+  color: #e07070;
+  border: 1px solid rgba(224, 112, 112, 0.3);
+}
+
+.status-pending {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+/* Action Buttons */
+.btn-rebook,
+.btn-cancel {
+  background: transparent;
+  border: none;
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-rebook {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+}
+
+.btn-rebook:hover {
+  background: var(--gold-dim);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.2);
+}
+
+.btn-cancel {
+  border: 1px solid #e07070;
+  color: #e07070;
+}
+
+.btn-cancel:hover {
+  background: rgba(224, 112, 112, 0.1);
+  transform: translateY(-1px);
+}
+
+.no-action {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Error Message */
+.error-message {
+  background: rgba(224, 112, 112, 0.1);
+  border: 1px solid rgba(224, 112, 112, 0.3);
+  color: #e07070;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.error-message button {
+  margin-left: 1rem;
+  background: var(--gold);
+  border: none;
+  padding: 0.25rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  color: var(--dark-base);
+  transition: all 0.2s ease;
+}
+
+.error-message button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.3);
+}
+
+/* No Bookings State */
+.no-bookings {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--dark-card);
+  border-radius: 24px;
+  border: 1px solid var(--dark-border);
+  margin-top: 20px;
+}
+
+.no-bookings p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.btn-book-now {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: none;
+  border-radius: 40px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dark-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-book-now:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(201, 168, 76, 0.3);
+}
+
+/* Debug Info (Remove in production) */
+.debug-info {
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-table th,
+  .history-table td {
+    padding: 12px;
+    font-size: 0.75rem;
+  }
+  
+  .btn-rebook,
+  .btn-cancel {
+    padding: 4px 12px;
+    font-size: 0.7rem;
+  }
+  
+  .history-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .container {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-table th,
+  .history-table td {
+    padding: 8px;
+    font-size: 0.7rem;
+  }
+  
+  .ref-cell,
+  .hotel-cell,
+  .room-cell,
+  .price-cell {
+    font-size: 0.7rem;
+  }
+  
+  .status-badge {
+    padding: 2px 8px;
+    font-size: 0.65rem;
+  }
+  
+  .btn-rebook,
+  .btn-cancel {
+    padding: 3px 8px;
+    font-size: 0.65rem;
+  }
+  
+  .history-header h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* Add debug panel styles */
+.debug-panel {
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+.debug-panel div {
+  margin: 4px 0;
+}

@@ -37,8 +37,10 @@ export interface Booking {
   status: string;
   bookingDate: Date;
   discountCode?: string;
-  userName?: string;
-  userEmail?: string;
+  // User info
+  userName?: string;      // ✅ Add this
+  userEmail?: string;     // ✅ Add this
+  // Optional nested objects
   userId?: number;
   roomId?: number;
   room?: Room;
