@@ -1,1 +1,94 @@
-<p>user-dashboard works!</p>
+
+<div class="container mt-4">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <h2>Welcome, {{ userName }}!</h2>
+    <p class="text-light">{{ userEmail }}</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+    <button *ngIf="errorMessage.includes('Session expired')" (click)="auth.logout()">Login Again</button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <h5>Total Bookings</h5>
+      <div class="stat-number">{{ recentBookings.length }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏨</div>
+      <h5>Quick Actions</h5>
+      <a class="stat-link" (click)="goToHotels()">Browse Hotels →</a>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👤</div>
+      <h5>My Profile</h5>
+      <a class="stat-link" (click)="goToProfile()">View Profile →</a>
+    </div>
+  </div>
+
+  <!-- Recent Bookings -->
+  <div class="recent-title">
+    Recent Bookings
+    <a *ngIf="recentBookings.length > 0" class="view-all-link" (click)="viewAllBookings()">View All →</a>
+  </div>
+  
+  <div class="booking-table-container">
+    <table class="booking-table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Hotel</th>
+          <th>Room</th>
+          <th>Check‑in</th>
+          <th>Check‑out</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loading state -->
+        <tr *ngIf="loading">
+          <td colspan="7" class="text-center">
+            <div class="spinner-border spinner-border-sm text-gold" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading your bookings...</p>
+          </td>
+        </tr>
+        
+        <!-- Bookings list -->
+        <ng-container *ngIf="!loading && !errorMessage">
+          <tr *ngFor="let booking of recentBookings">
+            <td class="ref-cell">{{ booking.bookingReference || ('BOOK-' + booking.id) }}</td>
+            <td class="hotel-cell">{{ booking.hotelName || 'Unknown Hotel' }}</td>
+            <td class="room-cell">{{ booking.roomNumber || '?' }} ({{ booking.roomType || '?' }})</td>
+            <td>{{ booking.checkInDate | date }}</td>
+            <td>{{ booking.checkOutDate | date }}</td>
+            <td class="price-cell">${{ booking.totalPrice }}</td>
+            <td>
+              <span class="status-badge" 
+                    [class.status-confirmed]="booking.status === 'Confirmed'"
+                    [class.status-cancelled]="booking.status === 'Cancelled'"
+                    [class.status-pending]="booking.status === 'Pending'">
+                {{ booking.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="recentBookings.length === 0 && !loading">
+            <td colspan="7" class="text-center text-muted">
+              No bookings yet. Start your first booking now!
+              <div class="mt-2">
+                <button class="btn-book-now" (click)="goToHotels()">Browse Hotels</button>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

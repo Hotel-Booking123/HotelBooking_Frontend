@@ -1,1 +1,76 @@
-<p>homepage works!</p>
+<section class="hero-section">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Premium Accommodations</p>
+
+    <h1>Find Your <em>Perfect</em><br>Stay</h1>
+
+    <p class="lead">
+      Discover handpicked luxury hotels with exclusive rates,
+      seamless booking, and concierge-level support.
+    </p>
+
+    <div class="hero-cta">
+      <a *ngIf="!auth.isLoggedIn()" routerLink="/register" class="btn-primary-gold">
+        Get Started
+      </a>
+      <a *ngIf="!auth.isLoggedIn()" routerLink="/login" class="btn-outline-gold">
+        Sign In
+      </a>
+      <button *ngIf="auth.isLoggedIn()" (click)="goToHotels()" class="btn-primary-gold">
+        Browse Hotels
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Cards -->
+<section class="features-section">
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Why Choose Us</h2>
+      <p>Everything you need for a flawless stay</p>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M8 11h1m3 0h1M8 15h1m3 0h1M9 21v-4h6v4"/>
+            </svg>
+          </div>
+          <h5>Luxury Properties</h5>
+          <p>Handpicked premium accommodations curated for quality, comfort, and exceptional experiences worldwide.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </div>
+          <h5>Best Rates</h5>
+          <p>Exclusive deals and seasonal promotions that guarantee the most competitive prices available.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <h5>24 / 7 Support</h5>
+          <p>Round-the-clock concierge support ready to assist with any request, anytime you need us.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
